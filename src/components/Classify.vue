@@ -2,20 +2,21 @@
   <div class="classify">
 		<div class="header">
 <!-- 6.常用指令 v-for     -->
-		  <div><span v-for="item in taglist" :class="{header_active: item.activeClass}" @click="setTag(item)">{{ item.name }}</span></div>
+		  <div><span v-for="item in taglist" :key="item+'1'" :class="{header_active: item.activeClass}" @click="setTag(item)">{{ item.name }}</span></div>
 		</div>
 
-		<div class="classifyTopCon" :class="{isshow: !item.activeClass}" v-for="item in taglist" v-if="item.activeClass">
-			<scroll ref="scroll" :data="item.catsdata">
-			<div ref="classifyCon">
-		  	<span v-for="(list, index) in item.catsdata" :class="{classify_on: list.classify_on}" @click="getCatlist(list, index)">{{ list.name }}</span>
-		  </div>
-		  </scroll>
+		<div class="classifyTopCon" :class="{isshow: !item.activeClass}" v-for="item in taglist" :key="item+'2'" >
+			<div v-if="item.activeClass" class="myadd-on">
+				<scroll ref="scroll" :data="item.catsdata">
+					<div ref="classifyCon">
+		  			<span v-for="(list, index) in item.catsdata" :key="list+'1'" :class="{classify_on: list.classify_on}" @click="getCatlist(list, index)">{{ list.name }}</span>
+		  			</div>
+		  		</scroll>
+			</div>
 		</div>
-
 		<scroll :data="booksList" :pullup="true" @scrollToEnd="scrollToEnd" ref="bookscroll" class="bookCon">
 			<div ref="bookCon">
-				<div class="bookList" @click="selectItem(item)" v-for="item in booksList">
+				<div class="bookList" @click="selectItem(item)" v-for="item in booksList" :key="item+1">
 					<div class="left"><img :src="'http://statics.zhuishushenqi.com'+item.cover" alt=""></div>
 					<div class="right">
 						<h3 class="name">{{ item.title }}</h3>
